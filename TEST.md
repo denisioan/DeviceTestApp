@@ -108,3 +108,7 @@ Response example:
         }
     }
 }
+
+## Test events
+From command line send the command: **websocat ws://localhost:8080/events/deviceFailure**
+This will open a WebSocket and listen to the events "deviceFailure"
