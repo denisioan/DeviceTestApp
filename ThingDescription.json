@@ -1,0 +1,64 @@
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "id": "urn:dev:wot:cashdepositdevice-1234",
+    "title": "Cash Deposit Device",
+    "description": "A Web of Things test application for a cash deposit device.",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "client_credentials",
+        "token": "http://localhost:8080/token",
+        "scopes": ["deposit", "status"]
+      }
+    },
+    "security": ["oauth2_sc"],
+    "properties": {
+      "status": {
+        "type": "string",
+        "description": "The current status of the device",
+        "forms": [
+          {
+            "href": "http://localhost:8080/status",
+            "contentType": "application/json",
+            "op": ["readproperty"]
+          }
+        ]
+      }
+    },
+    "actions": {
+      "deposit": {
+        "description": "Deposit an amount of money into the cash deposit device.",
+        "input": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "forms": [
+          {
+            "href": "http://localhost:8080/deposit",
+            "contentType": "application/json",
+            "op": ["invokeaction"]
+          }
+        ]
+      }
+    },
+    "events": {
+    "deviceFailure": {
+      "description": "Event triggered when the device encounters a failure or requires maintenance.",
+      "data": {
+        "type": "string"
+      },
+      "forms": [
+        {
+          "href": "ws://localhost:8080/events/deviceFailure",
+          "contentType": "application/json",
+          "subprotocol": "websocket"
+        }
+      ]
+    }
+  }
+}

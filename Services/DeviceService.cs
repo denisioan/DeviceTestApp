@@ -31,6 +31,7 @@ public class DeviceService
     {
         if (!_isDeviceOperational)
         {
+            Console.WriteLine($"Device is not operational.");
             return new DepositResponse
             {
                 Success = false,
@@ -40,6 +41,7 @@ public class DeviceService
 
         if (amount <= 0)
         {
+            Console.WriteLine($"Deposit amount must be greater than zero.");
             return new DepositResponse
             {
                 Success = false,

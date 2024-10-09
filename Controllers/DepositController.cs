@@ -17,15 +17,16 @@ public class DepositController
         _deviceService = deviceService;
     }
 
-    public async Task HandleDepositRequest(HttpListenerRequest request, HttpListenerResponse response)
+    public async Task<bool> HandleDepositRequest(HttpListenerRequest request, HttpListenerResponse response)
     {
         string authHeader = request.Headers["Authorization"];
         if (!_deviceService.ValidateToken(authHeader))
         {
             response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            return;
+            return false;
         }
 
+        Console.WriteLine("Handle DepositRequest");
         using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
         {
             string requestBody = await reader.ReadToEndAsync();
@@ -38,6 +39,8 @@ public class DepositController
             response.ContentType = "application/json";
             response.ContentLength64 = responseBuffer.Length;
             await response.OutputStream.WriteAsync(responseBuffer, 0, responseBuffer.Length);
+
+            return depositResponse.Success;
         }
     }
 }

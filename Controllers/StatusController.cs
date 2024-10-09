@@ -35,6 +35,7 @@ public class StatusController
         };
 
         // Send the response as JSON
+        Console.WriteLine("Handle StatusRequest");
         byte[] responseBuffer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(statusResponse));
         response.ContentType = "application/json";
         response.ContentLength64 = responseBuffer.Length;

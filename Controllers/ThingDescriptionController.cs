@@ -84,6 +84,7 @@ public class ThingDescriptionController
         };
 
         // Send the Thing Description as JSON-LD
+        Console.WriteLine("Handle ThingDescriptionRequest");
         byte[] responseBuffer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(thingDescription, Formatting.Indented));
         response.ContentType = "application/json";
         response.ContentLength64 = responseBuffer.Length;
